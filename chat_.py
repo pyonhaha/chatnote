@@ -43,6 +43,7 @@ def chatgpt(prompt, prompt_history, max_tokens = 1024, top_p = 0.9, n = 1, tempe
 
 LOCAL_REPO_PATH = "C:/Users/pyonchen/Desktop/coco/chat"
 BRANCH_NAME = "main"
+CHAT_TXT_DIR = "C:/Users/pyonchen/Desktop/coco/chat/haha.txt"
 
 while True:
     print("wait", time.time())
@@ -58,8 +59,7 @@ while True:
             print("有項目變更，正在更新本地資料...")
             origin.pull()
 
-            chat_txt_dir = "C:/Users/pyonchen/Desktop/coco/chat/haha.txt"
-            with open(chat_txt_dir, 'r', encoding='utf-8') as file:
+            with open(CHAT_TXT_DIR, 'r', encoding='utf-8') as file:
                 content = file.read()
 
             content_list = content.split("---1\n")
@@ -77,7 +77,7 @@ while True:
                 )
             ai_a = chatgpt(user_q, history_qa_2_ai)
             content = content + "\n---2\n" + ai_a
-            with open(chat_txt_dir, 'w', encoding='utf-8') as file:
+            with open(CHAT_TXT_DIR, 'w', encoding='utf-8') as file:
                 file.write(content)
 
 
