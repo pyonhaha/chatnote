@@ -95,7 +95,7 @@ while True:
 
     except Exception as e:
         print(f"異常訊息: {e}")
-    time.sleep(3)
+    time.sleep(9)
 
 # %%
 
