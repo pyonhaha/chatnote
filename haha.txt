@@ -50,3 +50,105 @@
 透過S Q L抓取資料庫
 並且回傳資料庫的內容到前端
 請問我該怎麼做
+
+
+
+---2
+要創建一個GET API，當前端調用時會根據傳遞的參數從SQL資料庫中檢索數據並將其返回給前端，你可以按照以下步驟進行：
+
+1. **創建API項目**:
+   如之前所述，使用Visual Studio或命令行界面創建一個ASP.NET Core Web API項目。
+
+2. **設置資料庫連接**:
+   在`appsettings.json`文件中配置你的資料庫連接字符串。例如，如果使用SQL Server，它可能看起來像這樣：
+   
+   ```json
+   {
+     "ConnectionStrings": {
+       "DefaultConnection": "Server=你的伺服器;Database=你的數據庫;User ID=你的用戶名;Password=你的密碼;"
+     }
+   }
+   ```
+   
+3. **安裝必要NuGet包**:
+   使用NuGet包管理器安裝Entity Framework Core和對應資料庫提供者的包。例如，如果使用SQL Server，則安裝`Microsoft.EntityFrameworkCore.SqlServer`。
+
+4. **設置數據模型**:
+   在項目中定義一個或多個C#類以匹配資料庫表結構。這些類稱為實體模型。
+
+5. **設置數據上下文**:
+   創建一個繼承自`DbContext`的類作為數據上下文並在其中定義DbSet屬性表示表。
+
+6. **注入數據上下文**:
+    在Startup.cs中配置服務依賴注入（DI），注入你剛才創建的DbContext。
+
+7. **創建Controller和Action方法**:
+    在Controller中添加一個Action方法來處理GET請求。在這個方法中，使用DI得到的DbContext實例來從資料庫讀取數據。
+
+8. **執行查詢並返回結果**:
+    在Action方法中根据请求参数執行LINQ查詢以從数据库检索数据，并将结果作为API响应返回给前端。
+
+以下是示例代码演示如何完成上述步骤：
+
+```csharp
+// 數據模型 (假設有一個名為"Product"的表)
+public class Product
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    // 其他屬性...
+}
+
+// 數據上下文
+public class ApplicationDbContext : DbContext
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+    {
+    }
+
+    public DbSet<Product> Products { get; set; }
+}
+
+// Controller
+[Route("api/[controller]")]
+[ApiController]
+public class ProductsController : ControllerBase
+{
+    private readonly ApplicationDbContext _context;
+
+    public ProductsController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    // GET: api/Products?name=產品名稱
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Product>>> GetProducts([FromQuery] string name)
+    {
+        var products = await _context.Products
+                                     .Where(p => p.Name == name)
+                                     .ToListAsync();
+
+        return Ok(products);
+    }
+}
+```
+
+在 `Startup.cs` 設置依賴注入和配置服務：
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+  services.AddControllers();
+  
+  // 設定DbContext with SQL Server Provider
+  services.AddDbContext<ApplicationDbContext>(options =>
+      options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+}
+```
+
+確保在 `appsettings.json` 中已经正确配置了连接字符串。启动项目后，在浏览器或Postman中向API发送GET请求应该能看到从数据库检索出来的数据。
+--- end ---
+
+
+
