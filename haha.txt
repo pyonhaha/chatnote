@@ -28,3 +28,55 @@
 我要如何讓python在編輯文件的時候保留這些字元
 而不影響我的程式碼
 
+
+
+
+---2
+在Python中，您可以使用字符串來表示文件的內容，並且在這些字符串中包含特殊字符，如`#`或`"`。為了確保這些特殊字符被正確地解釋為字符串的一部分而不是Python代碼的一部分，您需要將它們正確地轉義（對於雙引號）或者使用適當的引號（單引號或三重引號）來定義字符串。
+
+以下是一些例子：
+
+1. 使用單引號定義含有雙引號的字符串：
+
+```python
+text_with_double_quotes = '這是一個包含"特殊符號"的句子。'
+print(text_with_double_quotes)
+```
+
+2. 使用雙引號定義含有單引號的字符串：
+
+```python
+text_with_single_quote = "這是一個包含'特殊符號'的句子。"
+print(text_with_single_quote)
+```
+
+3. 使用三重引號定義多行字符串或包含多種特殊字符的字符串：
+
+```python
+multiline_text = """這是一個多行文字，
+它可以包含多種"特殊"符號，比如#和"等等。
+"""
+print(multiline_text)
+```
+
+4. 使用反斜杠轉義符來轉義雙引號或其他需要轉義的字符：
+
+```python
+escaped_double_quote = "這是一個包含轉義字符\\\"的句子。"
+print(escaped_double_quote)
+```
+
+當您要將這些文本寫入文件時，只需打開（或創建）文件並寫入這些文本即可：
+
+```python
+with open('example.md', 'w', encoding='utf-8') as file:
+    file.write(multiline_text)
+```
+
+上面代碼中使用了`with`語句來管理文件資源，自動關閉文件。我們指定了文件模式為`'w'`表示寫入模式（會覆蓋已有文件），並指定編碼為UTF-8以支持多種字符集。
+
+記得在開啟、閱讀、寫入和操作Markdown文件時始終保持文本編碼一致性，通常選擇UTF-8作為標準編碼格式。
+--- end ---
+
+
+
