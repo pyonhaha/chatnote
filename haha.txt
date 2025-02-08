@@ -1,3 +1,65 @@
 ---1
 如果我有兩個以上的while回圈
 請問我要如何同時執行
+
+
+---2
+在大多數傳統的程式語言中，比如 C, Java, Python 等，程式碼是按順序、同步執行的。也就是說，在一個單線程的應用程序中，你無法同時（在字面上的同時）執行兩個 `while` 迴圈；一個迴圈必須完成後，另一個迴圈才能開始。
+
+然而，如果你想要達到看似「同時」執行的效果，你可以使用多線程或多進程的方法來實現。以下是在 Python 中使用 `threading` 模塊創建兩個以上平行運行 `while` 迴圈的示例：
+
+```python
+import threading
+
+def loop1():
+    while True:
+        # 這裡填入第一個 while 迴圈應該做的事情
+        print("Loop 1")
+        # 可能需要一些延遲以防止CPU占用過高
+        time.sleep(1)
+
+def loop2():
+    while True:
+        # 這裡填入第二個 while 迴圈應該做的事情
+        print("Loop 2")
+        # 可能需要一些延遲以防止CPU占用過高
+        time.sleep(1)
+
+# 創建線程對象
+t1 = threading.Thread(target=loop1)
+t2 = threading.Thread(target=loop2)
+
+# 啟動線程
+t1.start()
+t2.start()
+
+# 如果需要主程序等待這些線程完成再退出，可以加上 join() 調用
+t1.join()
+t2.join()
+```
+
+注意：在使用多線程時，尤其當它們訪問共享資源時，你需要注意資源同步和競爭條件問題。Python 中有全局解釋器鎖（GIL），這意味著即使在多線程中，也只有一個執行緒會在任何給定時間點真正地執行 Python 字節碼。但對於 I/O 密集型任務或者利用某些釋放 GIL 的擴展模塊（如 numpy 的某些操作），使用多線程仍然可以提高性能。
+
+如果你想要真正意義上平行地處理 CPU 密集型任務，在有多核心處理器的系統上，你可能會考慮使用 `multiprocessing` 模塊來創建多進程。
+
+```python
+from multiprocessing import Process
+
+# 使用 Process 就像上面使用 Thread 那樣定義 loop1 和 loop2 函數
+
+if __name__ == "__main__":
+    p1 = Process(target=loop1)
+    p2 = Process(target=loop2)
+
+    p1.start()
+    p2.start()
+
+    p1.join()
+    p2.join()
+```
+
+由於每個進程都有自己的記憶體空間和解釋器鎖，所以 `multiprocessing` 可以讓 CPU 密集型任務真正地並行執行。不過請注意，在創建和管理進程時相比於線程會有更高的開銷新成本和更大的記憶體消耗。
+--- end ---
+
+
+
