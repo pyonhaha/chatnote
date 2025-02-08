@@ -62,3 +62,42 @@ chmod +x cut_videos.sh
 ---1
 我只想要有一次的input，也就是説我只要一個-i
 
+
+
+
+---2
+如果您希望只输入一次源视频文件，但需要多次切割不同的部分，您可以使用 FFmpeg 的复杂过滤器（complex filter）功能。这允许您在一个 FFmpeg 命令中处理多个输出。
+
+以下是一个使用 FFmpeg 复杂过滤器切割视频为多个片段的示例命令：
+
+```bash
+ffmpeg -i input.mp4 -filter_complex \
+"[0:v]trim=start=10:end=40,setpts=PTS-STARTPTS[v0]; \
+ [0:a]atrim=start=10:end=40,asetpts=PTS-STARTPTS[a0]; \
+ [0:v]trim=start=70:end=115,setpts=PTS-STARTPTS[v1]; \
+ [0:a]atrim=start=70:end=115,asetpts=PTS-STARTPTS[a1]; \
+ [0:v]trim=start=140:end=220,setpts=PTS-STARTPTS[v2]; \
+ [0:a]atrim=start=140:end=220,asetpts=PTS-STARTPTS[a2]" \
+-map "[v0]" -map "[a0]" output1.mp4 \
+-map "[v1]" -map "[a1]" output2.mp4 \
+-map "[v2]" -map "[a2]" output3.mp4
+```
+
+这条命令会生成三个输出文件：`output1.mp4`、`output2.mp4` 和 `output3.mp4`。每对 `v#` 和 `a#` 代表一段视频（video）和音频（audio）流。
+
+解释：
+- `-i input.mp4`: 指定输入文件。
+- `-filter_complex`: 开始一个复杂的过滤器图。
+- `[0:v]trim=start=X:end=Y`: 从视频流 `[0:v]` 中裁剪从 X 到 Y 秒的部分。
+- `setpts=PTS-STARTPTS`: 重置裁剪片段的显示时间戳，以便从 0 开始。
+- `[0:a]atrim=start=X:end=Y`: 对应的音频裁剪指令。
+- `asetpts=PTS-STARTPTS`: 音频版本的时间戳重置。
+- `-map "[vx]" -map "[ax]"`: 指定哪些视频和音频流应该被映射到输出文件中。
+
+请注意替换命令中的时间值（10、40、70、115、140、220）以匹配您要切割的实际时间点，并将输入文件名和输出文件名更改为符合您需求的名称。
+
+此方法只需要一次输入 (`-i`)，而且可以在单个 FFmpeg 运行中生成多个切割片段。如果要切割更多片段，只需按照上述模式添加更多的 trim 和 atrim 指令即可。
+--- end ---
+
+
+
