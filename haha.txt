@@ -2,3 +2,62 @@
 如果我用ffmpeg 的-ss和-t搭配切割影片
 但我如果同時有很多段想要的話
 我要如何一次執行完畢？
+
+
+---2
+如果您有多段视频想要使用 FFmpeg 的 `-ss`（起始时间）和 `-t`（持续时间）参数来切割，并且想要一次性完成所有的切割操作，那么您可以写一个简单的批处理脚本（在 Windows 系统中）或者 shell 脚本（在类 Unix 系统中，比如 Linux 或 macOS）。下面分别给出两种系统中的例子。
+
+### 在 Windows 上使用批处理脚本：
+
+创建一个批处理文件，例如 `cut_videos.bat`，并在文件中加入以下内容：
+
+```batch
+@echo off
+setlocal enabledelayedexpansion
+
+set "input=your_video.mp4"
+
+ffmpeg -ss 00:00:10 -t 00:00:30 -i "!input!" -c copy output1.mp4
+ffmpeg -ss 00:01:10 -t 00:00:45 -i "!input!" -c copy output2.mp4
+ffmpeg -ss 00:02:20 -t 00:01:30 -i "!input!" -c copy output3.mp4
+
+echo All videos have been cut.
+```
+
+将以上代码中的 `your_video.mp4` 替换为您要切割的视频文件名，并根据需要调整 `-ss` 和 `-t` 后面的参数。每行代表一个切割命令，生成不同的输出文件。
+
+### 在类 Unix 系统上使用 shell 脚本：
+
+创建一个 shell 脚本文件，例如 `cut_videos.sh`，并在文件中加入以下内容：
+
+```bash
+#!/bin/bash
+
+input="your_video.mp4"
+
+ffmpeg -ss 00:00:10 -t 00:00:30 -i "$input" -c copy output1.mp4
+ffmpeg -ss 00:01:10 -t 00:00:45 -i "$input" -c copy output2.mp4
+ffmpeg -ss 00:02:20 -t 00:01:30 -i "$input" -c copy output3.mp4
+
+echo "All videos have been cut."
+```
+
+同样地，替换 `your_video.mp4` 为您的视频文件名，并根据需要调整 `-ss` 和 `-t` 的值。每行是一条独立的 FFmpeg 命令。
+
+不要忘记赋予脚本执行权限：
+
+```bash
+chmod +x cut_videos.sh
+```
+
+然后运行脚本：
+
+```bash
+./cut_videos.sh
+```
+
+通过这些脚本，您可以依次执行多个 FFmpeg 切割命令。如果切割点非常多，并且遵循某种规律，您还可以考虑编写更复杂的脚本来自动生成这些命令。
+--- end ---
+
+
+
