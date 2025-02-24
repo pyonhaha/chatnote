@@ -42,3 +42,52 @@ sql的語句變成where id=$1
 以及包含特殊符號的字串
 請問我該怎麼做？
 
+
+
+
+---2
+在使用 Dapper 進行 .NET 開發時，參數化查詢是處理引號和特殊字符的最佳方式，因為它可以保護您免受 SQL 注入攻擊。如果您要將 `@Id` 替換為包含引號的字符串或包含特殊符號的字符串，只需確保您將這些值作為參數傳遞給 Dapper 的查詢方法。
+
+以下是一個示例代碼片段，說明如何使用 Dapper 傳遞包含引號和特殊字符的字符串：
+
+```csharp
+using System.Data;
+using Dapper;
+using System.Data.SqlClient;
+
+// 假設你已經有了一個DB連接
+IDbConnection dbConnection = new SqlConnection("您的連接字符串");
+
+// 要傳遞給SQL查詢的值
+string valueWithQuotes = "'ga','ju'";
+string valueWithSpecialChars = "some!@#value";
+
+// 您的SQL命令文本
+string sql =
+@"
+    DELETE FROM Card
+    WHERE SomeColumn = @ValueWithQuotes OR OtherColumn = @ValueWithSpecialChars
+";
+
+// 構造參數物件
+var parameters = new DynamicParameters();
+parameters.Add("ValueWithQuotes", valueWithQuotes, DbType.String);
+parameters.Add("ValueWithSpecialChars", valueWithSpecialChars, DbType.String);
+
+// 執行帶參數的SQL命令
+int rowsAffected = dbConnection.Execute(sql, parameters);
+```
+
+在上面的代碼中，`SomeColumn` 和 `OtherColumn` 是假定存在於您的 `Card` 表中且用於比較值得列名。請根據實際情況替換它們。
+
+注意事項：
+- 參數 `ValueWithQuotes` 和 `ValueWithSpecialChars` 分別包含了帶引號和特殊字符的字符串。Dapper 會自動處理這些值，防止任何可能發生的 SQL 注入攻擊。
+- 當使用 Dapper 進行參數化查詢時，不需要手動轉義任何特殊字符或引號；Dapper 會為你做這件事。
+- 在 SQL 查詢中使用 `@ParameterName` 占位符來指向要替換成實際值得地方。
+- 使用 `DynamicParameters` 對象來添加查詢所需得所有參數。
+
+確保在實際操作中替換掉範例中得“您的連接字符串”與表格欄位名稱等占位文字。
+--- end ---
+
+
+
