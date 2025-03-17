@@ -48,3 +48,45 @@ df = pd.read_sql(sql, conn, params=params_dict)
 ---1
 如果b_values="a','b','c"傳入後會變成怎麼樣？可以運作嗎？
 
+
+
+
+---2
+如果 `b_values` 是一个字符串，形如 `"a','b','c"`，它不会直接适用于前面提到的参数化查询。在 SQL 查询中，您通常需要将这些值作为独立的条目传入，通常是作为列表或元组。如果您直接将 `"a','b','c"` 作为一个字符串传入查询，它会被视为单个字符串参数。
+
+在 SQL 中使用 `IN` 子句时，您应该传递一个元素序列而不是单一字符串。例如：
+
+```sql
+SELECT * FROM table WHERE a IN ('a', 'b', 'c')
+```
+
+如果您有一个像 `"a','b','c"` 这样格式的字符串并且希望将其用作 `IN` 子句的一部分，您需要首先将其转换成 Python 列表或元组。这里有一个例子如何处理这个问题：
+
+```python
+# 假设 b_values 是一个由逗号和单引号分隔的值组成的字符串
+b_values = "a','b','c"
+
+# 将字符串转换成列表
+value_list = b_values.split("','")
+
+# 创建参数占位符字符串
+params_placeholders = ', '.join(['%s'] * len(value_list))
+
+# 构建 SQL 查询语句
+sql = "SELECT * FROM table WHERE a IN (%s)" % params_placeholders
+
+# 使用 pd.read_sql 查询数据库
+df = pd.read_sql(sql, conn, params=value_list)
+
+print(df)
+```
+
+在上面的例子中，我们首先使用 `split` 方法将 `b_values` 字符串转换成列表 `value_list`。然后我们按照之前描述过的步骤构建查询。
+
+但是，请注意这种方法并不安全，因为它没有使用真正的参数化查询来预防 SQL 注入攻击。更安全和推荐的做法是始终使用参数化查询，并确保所有数据都正确地被转义和引用。如果可能，请从源头确保数据以列表或元组形式提供给 SQL 查询函数。
+
+在实际应用中，请尽量避免手动拼接 SQL 查询，并且始终对外部输入进行验证和清洗以防止潜在的安全风险。
+--- end ---
+
+
+
