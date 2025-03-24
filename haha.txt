@@ -36,3 +36,37 @@ else:
 我想要讓修改後的資料夾只保留數字，小數點，-這三個東西
 
 
+
+
+
+---2
+如果你想要將資料夾名稱中的非數字、非小數點和非連字符"-"的部分移除，你可以使用正規表達式來匹配並替換掉那些字符。Python 的 `re` 模塊提供了這樣的功能。以下是一個例子：
+
+```python
+import os
+import re
+
+# 資料夾原始名稱
+original_folder_name = '舊資料夾-123.45'
+
+# 使用正則表達式來匹配所有非數字、非小數點和非連字符"-"的字符並將其替換成空字符串
+new_folder_name = re.sub(r'[^\d.-]', '', original_folder_name)
+
+# 檢查原始資料夾是否存在
+if os.path.exists(original_folder_name):
+    # 重新命名資料夾
+    os.rename(original_folder_name, new_folder_name)
+    print(f"資料夾已從 '{original_folder_name}' 更名為 '{new_folder_name}'")
+else:
+    print(f"錯誤：找不到 '{original_folder_name}' 這個資料夾")
+```
+
+在這個代碼中，`re.sub()` 函數用於尋找所有不符合條件（即不是數字、小數點或連字符"-"）的字符，並將它們替換為空字符串。正則表達式`[^\d.-]`表示匹配任何不是數字（`\d`）、不是小散點（`.`）和不是連字符（`-`）的任何單個字符。
+
+請根據你實際的情況修改`original_folder_name`變量，以便指向正確的文件夾路徑。
+
+記住，在對文件系統進行操作之前，始終做好備份並確保你有權限進行該操作，以防止數據損失或其他問題。
+--- end ---
+
+
+
