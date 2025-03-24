@@ -2,3 +2,34 @@
 我要如何重新命名資料夾?
 請問我要如何用python實現？
 
+
+
+
+---2
+在Python中重新命名資料夾，你可以使用內建的`os`模塊中的`rename()`函數。以下是一個簡單的例子來展示如何用Python來重新命名資料夾：
+
+```python
+import os
+
+# 資料夾原始名稱
+original_folder_name = 'old_folder_name'
+
+# 新的資料夾名稱
+new_folder_name = 'new_folder_name'
+
+# 檢查原始資料夾是否存在
+if os.path.exists(original_folder_name):
+    # 重新命名資料夾
+    os.rename(original_folder_name, new_folder_name)
+    print(f"資料夾已從 '{original_folder_name}' 更名為 '{new_folder_name}'")
+else:
+    print(f"錯誤：找不到 '{original_folder_name}' 這個資料夾")
+```
+
+請確保在運行此代碼之前，變量`original_folder_name`和`new_folder_name`分別被設置為你想要更改的舊資料夾和新資料夾的正確路徑。
+
+需要注意的是，如果目標位置（即新的資料夾名稱所指定的路徑）已經存在同名的檔案或文件夹，則會拋出錯誤。因此，在實際操作前最好先做好相應的檢查或錯誤處理。
+--- end ---
+
+
+
