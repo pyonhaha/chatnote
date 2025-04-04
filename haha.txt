@@ -44,4 +44,5 @@ console.log(givenDate.getFullYear() + '-' + (givenDate.getMonth() + 1) + '-' + g
 --- end ---
 
 
-
+---1
+請給我python的最精簡寫法
