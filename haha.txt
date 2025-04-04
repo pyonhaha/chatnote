@@ -46,3 +46,24 @@ console.log(givenDate.getFullYear() + '-' + (givenDate.getMonth() + 1) + '-' + g
 
 ---1
 請給我python的最精簡寫法
+
+
+
+---2
+要在Python中以最精简的方式获取前一天的日期，你可以使用一行代码来完成。以下是一个例子：
+
+```python
+print((datetime.strptime('2025-01-20', '%Y-%m-%d') - timedelta(days=1)).strftime('%Y-%m-%d'))
+```
+
+这行代码将输出`2025-01-19`，即2025年1月20日的前一天。请确保在你的代码中导入了必要的模块：
+
+```python
+from datetime import datetime, timedelta
+```
+
+在使用这段代码之前，请先将上面的模块导入语句添加到你的Python脚本顶部。
+--- end ---
+
+
+
