@@ -67,3 +67,47 @@ r"https://www.youtube.com/watch?v=3P7ADC_r8ws",]
 我想要找出所有bbb這些url的設定，我該怎麼做
 
 
+
+
+
+---2
+為了找出 `bbb` 中每個 URL 的設定，你需要對 `a` 列表進行解析，構建一個從 URL 到其相關設定的映射，然後使用這個映射來提取 `bbb` 中每個 URL 的設定。下面是一種可能的 Python 程序來完成這項任務：
+
+```python
+import re
+
+# 創建一個字典來存儲每個URL和它的設定
+settings = {}
+
+# 初始化當前URL為None
+current_url = None
+
+# 遍歷列表 a 並解析數據
+for line in a:
+    # 檢查是否是新的URL開始
+    if "[youtube] Extracting URL:" in line:
+        # 從當前行提取URL
+        current_url = re.findall(r"https://www\.youtube\.com/watch\?v=\w+", line)[0]
+        # 初始化該URL的設定為空列表，以防沒有設定行與之對應
+        settings[current_url] = []
+    else:
+        # 如果不是新的URL開始，則將設定行添加到當前URL的設定中
+        settings[current_url].append(line)
+
+# 遍歷列表 bbb 並打印出每個URL的設定
+for url in bbb:
+    if url in settings:
+        print(f"Settings for {url}:")
+        for setting_line in settings[url]:
+            print(setting_line)
+    else:
+        print(f"No settings found for {url}")
+```
+
+執行上述代碼後，你會得到列表 `bbb` 中每個 YouTube URL 的相關設定。如果某個 URL 在 `a` 列表中沒有找到相應的設定，程式會輸出表示沒有找到設定的消息。
+
+請注意，在實際場景中可能需要根據實際情況調整正則表達式或邏輯以適配不同格式或數據變化。
+--- end ---
+
+
+
