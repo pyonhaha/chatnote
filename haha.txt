@@ -109,5 +109,16 @@ for url in bbb:
 請注意，在實際場景中可能需要根據實際情況調整正則表達式或邏輯以適配不同格式或數據變化。
 --- end ---
 
+---1
+IndexError                                Traceback (most recent call last)
+File c:\Users\pyon\Desktop\test.py:42
+     38 for line in a:
+     39     # 檢查是否是新的URL開始
+     40     if "[youtube] Extracting URL:" in line:
+     41         # 從當前行提取URL
+---> 42         current_url = re.findall(r"https://www\.youtube\.com/watch\?v=\w+", line)[0]
+     43         # 初始化該URL的設定為空列表，以防沒有設定行與之對應
+     44         settings[current_url] = []
 
+IndexError: list index out of range
 
