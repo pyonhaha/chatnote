@@ -112,4 +112,5 @@ exiftool "-DateTimeOriginal<FileModifyDate" -overwrite_original picture.jpg
 --- end ---
 
 
-
+---1
+如果該資料夾底下有很多檔案的話，我可以一次變更嗎
