@@ -1,3 +1,48 @@
 ---1
 我要如何透過ExifTool讀取File Modification Date/Time的值?
 另外，我要如何指定修改拍攝日期？
+
+
+
+---2
+ExifTool 是一个强大的工具，可以用来读取和写入多种类型的文件的元数据，包括照片的EXIF信息。以下是如何使用ExifTool来完成你所要求的任务：
+
+1. 读取文件修改日期和时间：
+要使用ExifTool读取文件的修改日期和时间，你可以在命令行中使用以下命令：
+
+```sh
+exiftool -FileModifyDate <filename>
+```
+
+将`<filename>`替换为你想要读取其修改日期和时间的文件名。
+
+例如：
+
+```sh
+exiftool -FileModifyDate picture.jpg
+```
+
+这将会输出该文件的修改日期和时间信息。
+
+2. 修改拍摄日期：
+如果你想改变照片文件中嵌入的拍摄日期（通常是EXIF数据中的DateTimeOriginal字段），可以使用以下命令：
+
+```sh
+exiftool "-DateTimeOriginal=<date_time>" <filename>
+```
+
+将`<date_time>`替换为你想设置的日期和时间（格式通常是`YYYY:MM:DD HH:MM:SS`），并将`<filename>`替换为相应的文件名。
+
+例如，如果你想把拍摄日期改为2023年1月2日3点4分5秒，可以这样做：
+
+```sh
+exiftool "-DateTimeOriginal=2023:01:02 03:04:05" picture.jpg
+```
+
+记住，在更改任何元数据之前最好备份原始文件，以防万一需要恢复。
+
+另外，请注意，在某些操作系统（如Windows）中，可能需要在命令前加上 `perl` 来调用Perl脚本运行ExifTool（如果ExifTool是作为Perl模块安装的）。在大多数情况下，直接运行 `exiftool` 就足够了。如果遇到问题，请根据安装时提供的指南进行操作或者查看ExifTool官方文档获取更详细信息。
+--- end ---
+
+
+
