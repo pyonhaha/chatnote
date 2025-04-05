@@ -48,3 +48,68 @@ exiftool "-DateTimeOriginal=2023:01:02 03:04:05" picture.jpg
 ---1
 如果讀取出來的FileModifyDate想要放入DateTimeOriginal我可以怎麼做？
 
+
+
+
+---2
+要将文件的修改日期和时间复制到EXIF数据中的拍摄日期（DateTimeOriginal），你可以使用ExifTool的两步命令操作。首先，读取文件的修改日期和时间，然后将这个值写入到DateTimeOriginal。这里是如何做到这一点：
+
+1. 首先，在命令行中输入以下命令来读取文件的修改日期和时间：
+
+```sh
+exiftool -FileModifyDate <filename>
+```
+
+例如：
+
+```sh
+exiftool -FileModifyDate picture.jpg
+```
+
+你会得到一个输出，类似于这样：
+
+```
+File Modify Date/Time     : 2023:01:02 03:04:05+00:00
+```
+
+记下这个日期和时间。
+
+2. 然后，使用ExifTool将这个值写入DateTimeOriginal字段。使用上面获取的日期和时间值替换`<date_time>`，并替换文件名 `<filename>`。
+
+```sh
+exiftool "-DateTimeOriginal=<date_time>" <filename>
+```
+
+例如：
+
+```sh
+exiftool "-DateTimeOriginal=2023:01:02 03:04:05" picture.jpg
+```
+
+但如果你想自动化此过程并直接从FileModifyDate复制到DateTimeOriginal，可以使用ExifTool的一个特性，它允许将一个标签的值复制到另一个标签。以下是单条命令完成此操作：
+
+```sh
+exiftool "-DateTimeOriginal<FileModifyDate" <filename>
+```
+
+在上面的命令中，`-DateTimeOriginal<FileModifyDate`告诉ExifTool从`FileModifyDate`字段复制值并放入`DateTimeOriginal`字段。务必确保在 `<filename>` 处用实际文件名代替。
+
+例如：
+
+```sh
+exiftool "-DateTimeOriginal<FileModifyDate" picture.jpg
+```
+
+执行此命令后，照片文件中的拍摄日期应该会被更新为与文件修改日期一致。
+
+请注意：在运行以上任何命令之前，请确保备份原始图片以防丢失数据。此外，ExifTool默认会创建原始图片的备份（通常是在同一目录下以 `_original` 后缀保存）。如果你不想创建备份，请添加 `-overwrite_original` 选项来覆盖原始图片而不留下备份。
+
+```sh
+exiftool "-DateTimeOriginal<FileModifyDate" -overwrite_original picture.jpg
+```
+
+以上就是如何将文件修改日期和时间复制到照片EXIF信息中拍摄日期字段的方法。
+--- end ---
+
+
+
