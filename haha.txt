@@ -149,5 +149,6 @@ exiftool "-DateTimeOriginal<FileModifyDate" -overwrite_original /path/to/directo
 这会覆盖原始图片而不留下任何备份。再次提醒，在执行此类操作之前，请确保已备份重要数据。
 --- end ---
 
-
+---1
+如果我要把FileModifyDate加入檔案名稱的話可以怎麼做?
 
