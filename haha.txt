@@ -42,3 +42,82 @@
 
 
 
+
+
+
+---2
+要使用Python来修改照片或视频的元数据，包括拍摄日期（通常存储在EXIF数据中），你可以使用第三方库，如`Pillow`（用于图片）和`hachoir`（用于视频）。以下是使用这些库的基础代码示例。
+
+### 安装所需的库
+
+首先，你需要安装这些库。在命令行中运行以下命令来安装它们：
+
+```bash
+pip install Pillow hachoir
+```
+
+### 使用Pillow修改照片EXIF数据
+
+```python
+from PIL import Image
+from PIL.ExifTags import TAGS, GPSTAGS
+
+def change_exif_date(image_path, new_date):
+    img = Image.open(image_path)
+    
+    # 确保图片有EXIF数据
+    if not img.info.get('exif'):
+        raise ValueError("Image does not have EXIF data.")
+    
+    # 修改EXIF信息
+    exif_dict = img._getexif()
+    
+    # 创建一个新的EXIF数据字典以存储修改后的信息
+    new_exif_dict = {}
+    for tag, value in exif_dict.items():
+        decoded_tag = TAGS.get(tag, tag)
+        new_exif_dict[decoded_tag] = value
+    
+    # 设置新的拍摄日期 - 确保格式为'YYYY:MM:DD HH:MM:SS'
+    new_exif_dict['DateTimeOriginal'] = new_date
+    
+    # 将新的EXIF信息转换回二进制形式
+    exif_bytes = piexif.dump(new_exif_dict)
+    
+    # 保存图片并添加新的EXIF信息
+    img.save(image_path, "jpeg", exif=exif_bytes)
+
+# 调用函数来改变照片拍摄日期
+change_exif_date('path_to_your_image.jpg', '2023:01:01 00:00:00')
+```
+
+### 使用hachoir修改视频元数据
+
+对于视频文件，我们可以使用`hachoir-metadata`来查看元数据，但不幸的是，它不支持写入或修改元数据。当前没有广泛支持写入视频元数据的Python库。如果你需要修改视频文件的元数据，可能需要调用命令行工具如`ffmpeg`或者`exiftool`。
+
+下面是如何通过Python调用`ffmpeg`来更改视频文件中“创建时间”字段（请确保已经安装了ffmpeg）：
+
+```python
+import subprocess
+
+def change_video_creation_time(video_path, new_datetime):
+    command = [
+        'ffmpeg',
+        '-y',  # 覆盖输出文件而不询问
+        '-i', video_path,
+        '-metadata', f'creation_time={new_datetime}',
+        '-codec', 'copy',  # 不重新编码，复制流以避免质量损失
+        f'{video_path}_modified.mp4'
+    ]
+    
+    subprocess.run(command)
+
+# 调用函数来改变视频创建时间 - 格式为'YYYY-MM-DD HH:MM:SS'
+change_video_creation_time('path_to_your_video.mp4', '2023-01-01T00:00:00')
+```
+
+请注意，在处理任何文件时都应该谨慎，并且备份原始文件非常重要。此外，请注意版权和隐私问题；只有在合法情况下才能更改文件元数据。
+--- end ---
+
+
+
