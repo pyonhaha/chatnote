@@ -4,3 +4,40 @@ yt-dlp/exe -F https://www.youtube.com/watch?v=koOj8d7vvlc > 0.txt
 yt-dlp/exe -F https://www.youtube.com/watch?v=Ty3wqBxb0UE > 0.txt
 我想要同時將輸出放到0.txt也想要在cmd中看的到，請問我該怎麼做？
 另外，如果執行上述內容，會導致第一個輸出看不到，我該怎麼辦？
+
+
+
+---2
+為了同時將命令的輸出結果顯示在命令提示符(cmd)中並重定向到一個文件中，你可以使用 `tee` 命令。不過，Windows 原生不支持 `tee`，但你可以通過安裝額外的工具如 Git for Windows 來獲得它。或者，如果你在 Windows 10 或更新版本上，你可以利用 Windows Subsystem for Linux (WSL) 或 PowerShell。
+
+由於 `yt-dlp` 是一個第三方工具，且 `.exe` 應該是執行文件的後綴名而不是文件夾分隔符。假設你已經有了一個可用的 `tee` 工具，以下是一個批處理文件（.bat）的範例：
+
+```batch
+@echo off
+
+:: 確保 yt-dlp.exe 路徑正確
+:: 將下面的路徑替換成 yt-dlp.exe 的實際路徑
+set YTDLP_PATH=C:\path\to\yt-dlp.exe
+
+:: 使用 tee 命令將輸出同時發送到 cmd 和 0.txt 文件
+%YTDLP_PATH% -F https://www.youtube.com/watch?v=koOj8d7vvlc | tee 0.txt
+%YTDLP_PATH% -F https://www.youtube.com/watch?v=Ty3wqBxb0UE | tee -a 0.txt
+
+:: 如果使用 PowerShell 的 Out-File 和 Tee-Object cmdlet，在 PowerShell 腳本中則會是這樣：
+:: & "C:\path\to\yt-dlp.exe" -F https://www.youtube.com/watch?v=koOj8d7vvlc | Tee-Object -FilePath "0.txt"
+:: & "C:\path\to\yt-dlp.exe" -F https://www.youtube.com/watch?v=Ty3wqBxb0UE | Tee-Object -Append -FilePath "0.txt"
+
+pause
+```
+
+注意事項：
+1. 需要將 `%YTDLP_PATH%` 替換成實際的 `yt-dlp.exe` 文件路徑。
+2. 第二行使用了 `-a` 參數來向現有的 `0.txt` 文件追加內容而不是覆蓋它。
+3. 如果沒有安裝支持 `tee` 的程序包，上述批處理將無法工作。
+4. 如果你想要在 PowerShell 中執行這些指令而非批處理文件，請使用註解部分提供的 PowerShell 腳本代碼。
+
+關於第二個問題：如果按照原始命令直接重定向到相同的文件（即使用 `>`），第二次執行命令時會覆蓋第一次執行命令時產生的內容。要解決這個問題，可以像上面示例中那樣使用 `-a` 參數來追加內容或者在每次命令之間更改輸出文件名稱以保存所有內容。
+--- end ---
+
+
+
