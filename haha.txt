@@ -80,3 +80,53 @@ exiftool "-DateTimeOriginal<FileModifyDate" -overwrite_original /path/to/file
 ---1
 os.system(r"exiftool D:\0\0.JPG")
 我要如何取CMD PRINT的值?
+
+
+
+---2
+在Python中，如果你想要捕获`os.system`命令的输出结果，你应该使用`subprocess`模块，而不是直接使用`os.system`。因为`os.system`只返回命令的退出状态（0表示成功，非0表示出错），而不是命令的输出。
+
+下面是如何使用`subprocess.check_output`来执行命令并捕获其输出：
+
+```python
+import subprocess
+
+# 要执行的命令
+command = r"exiftool D:\0\0.JPG"
+
+# 运行命令并获取输出
+try:
+    result = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True, text=True)
+    print("CMD output:", result)
+except subprocess.CalledProcessError as e:
+    print("Error occurred:", e.output)
+```
+
+在上面的代码中，我们使用了以下参数：
+- `stderr=subprocess.STDOUT`: 将错误输出重定向到标准输出流。
+- `shell=True`: 允许直接通过shell执行命令。
+- `text=True`: 在Python 3.7及以上版本中等同于 `universal_newlines=True`, 它指示返回的输出应该是一个字符串而不是字节序列。
+
+这将执行ExifTool命令，并且将其标准输出保存在变量`result`中。如果发生错误，它将打印错误信息。
+
+请注意，使用shell执行命令时需要特别小心以避免安全风险（例如注入攻击）。如果可能，请直接传递参数列表给subprocess函数，并避免设置shell=True。例如：
+
+```python
+import subprocess
+
+# 分割命令为参数列表
+command = ["exiftool", r"D:\0\0.JPG"]
+
+# 运行命令并获取输出
+try:
+    result = subprocess.check_output(command, stderr=subprocess.STDOUT, text=True)
+    print("CMD output:", result)
+except subprocess.CalledProcessError as e:
+    print("Error occurred:", e.output)
+```
+
+这种方式更安全，因为它避免了对shell的依赖和相关风险。
+--- end ---
+
+
+
