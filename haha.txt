@@ -152,3 +152,49 @@ exiftool "-DateTimeOriginal<FileModifyDate" -overwrite_original /path/to/directo
 ---1
 如果我要把FileModifyDate加入檔案名稱的話可以怎麼做?
 
+
+
+
+---2
+如果你想要将文件的修改日期和时间添加到文件名中，可以使用ExifTool的重命名功能。下面是一个基本的命令示例，它会将修改日期和时间添加到文件名前面：
+
+```sh
+exiftool "-filename<FileModifyDate" -d "%Y%m%d_%H%M%S_%%f.%%e" /path/to/directory
+```
+
+在这个命令中：
+
+- `-filename<FileModifyDate` 指示 ExifTool 从 `FileModifyDate` 字段获取数据。
+- `-d` 选项后面跟随的字符串用于定义日期和时间的格式。在这个例子中，格式是 `"年月日_时分秒"`（例如 `"20230102_030405_originalname.jpg"`）。
+- `%%f` 是原始文件名（不包含扩展名）。
+- `%%e` 是文件扩展名。
+
+请确保将 `/path/to/directory` 替换为实际目录路径。
+
+这个命令会处理指定目录下的所有文件，并根据每个文件的修改日期和时间来重命名它们。
+
+如果你想要递归地处理目录及其所有子目录中的文件，可以加上 `-r` 参数：
+
+```sh
+exiftool "-filename<FileModifyDate" -d "%Y%m%d_%H%M%S_%%f.%%e" -r /path/to/directory
+```
+
+如果你希望在原有文件名之前添加日期和时间（而不是替换原有名称），可以稍微调整格式化字符串：
+
+```sh
+exiftool "-filename<${FileModifyDate}_${FileName}" -d "%Y%m%d_%H%M%S_" /path/to/directory
+```
+
+此命令将保留原始文件名，并在前面加上类似 "20230102_030405_" 的时间戳。
+
+请记住，在执行这些操作之前，备份您的原始文件总是一个好习惯。如果你确定不需要备份并且想直接重写原始文件而无需生成副本，可以使用 `-overwrite_original` 参数：
+
+```sh
+exiftool "-filename<FileModifyDate" -d "%Y%m%d_%H%M%S_%%f.%%e" -overwrite_original /path/to/directory
+```
+
+最后，请注意Windows用户可能需要使用双百分号 (`%%`) 来转义格式化字符串中的百分号字符（例如 `%%Y` 而不是 `%Y`），而在Unix-like系统（如Linux或macOS）上通常只需要单一百分号 (`%`)。
+--- end ---
+
+
+
