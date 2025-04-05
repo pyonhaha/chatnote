@@ -42,3 +42,39 @@
 
 
 
+
+
+
+---2
+若要使用ExifTool将文件的修改日期填入拍攝日期中，你需要先知道文件的修改日期，然後用相應的命令更新EXIF數據。下面是如何使用ExifTool从文件系统获取修改日期并应用于EXIF拍攝日期的步骤：
+
+1. **安装ExifTool**：
+   如果你还没有安装ExifTool，请先从官网下载并安装它。网址为：https://exiftool.org/
+
+2. **打开命令行界面**：
+   - 在Windows上，搜索"cmd"或"Command Prompt"。
+   - 在MacOS或Linux上，打开"Terminal"。
+
+3. **查找文件的修改日期**：
+   你可以直接在文件资源管理器（Windows）或Finder（Mac）中查看文件属性以得知修改日期。
+
+4. **将修改日期写入EXIF拍攝日期**：
+   使用以下命令格式来更新EXIF数据。请确保将`/path/to/file`替换为目标媒体文件的实际路径，并用实际的修改日期替换`YYYY:MM:DD HH:MM:SS`格式中的占位符。
+
+   ```shell
+   exiftool "-DateTimeOriginal<FileModifyDate" /path/to/file
+   ```
+
+   此命令告诉ExifTool使用每个文件系统记录的最后修改时间（FileModifyDate），并将其复制到EXIF数据中拍摄时间（DateTimeOriginal）字段。
+
+请注意，在运行此命令后，原始媒体文件会被重命名为备份（通常是在原始文件名后添加"_original"），而新生成的媒体文件会包含所做更改。如果你想在不创建备份情况下直接覆盖原始文件，请使用 `-overwrite_original` 参数：
+
+```shell
+exiftool "-DateTimeOriginal<FileModifyDate" -overwrite_original /path/to/file
+```
+
+记得在运行这些操作之前备份你的原始文件以防万一出现任何错误导致数据丢失。
+--- end ---
+
+
+
