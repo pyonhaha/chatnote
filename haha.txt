@@ -1,2 +1,18 @@
 ---1
 請給我一行的寫法，我要用python創建一個資料夾，如果該資料夾存在，就忽略
+
+
+
+---2
+Certainly! You can use the `os` module in Python to create a directory and ignore the operation if the directory already exists by using `os.makedirs()` with the `exist_ok=True` flag:
+
+```python
+import os
+os.makedirs('your_directory_name', exist_ok=True)
+```
+
+Replace `'your_directory_name'` with the name of the directory you wish to create.
+--- end ---
+
+
+
