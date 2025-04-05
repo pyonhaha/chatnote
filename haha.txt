@@ -45,4 +45,6 @@ exiftool "-DateTimeOriginal=2023:01:02 03:04:05" picture.jpg
 --- end ---
 
 
+---1
+如果讀取出來的FileModifyDate想要放入DateTimeOriginal我可以怎麼做？
 
