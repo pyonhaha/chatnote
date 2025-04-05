@@ -13,6 +13,8 @@ os.makedirs('your_directory_name', exist_ok=True)
 
 Replace `'your_directory_name'` with the name of the directory you wish to create.
 --- end ---
+---1
+OSError: [WinError 17] 系統無法將檔案移到不同的磁碟機。
 
 
 
