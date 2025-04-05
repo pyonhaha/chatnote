@@ -77,4 +77,6 @@ exiftool "-DateTimeOriginal<FileModifyDate" -overwrite_original /path/to/file
 --- end ---
 
 
-
+---1
+os.system(r"exiftool D:\0\0.JPG")
+我要如何取CMD PRINT的值?
