@@ -1,3 +1,28 @@
 ---1
 exiftool "-filename<${CreateDate}_${FileName}" -d "%Y%m%d_%H%M%S"  -overwrite_original
 透過這個方法可以將時間放入檔名中，但我想要在filename終將時間多8小時，我該怎麼做？
+
+
+
+---2
+`exiftool` 並沒有直接的方式來在日期時間上加上固定小時數，但你可以使用它的時間計算功能來達到這個目的。以下是一個範例指令，它會將原始創建日期加上8小時，然後將其格式化並重命名檔案：
+
+```bash
+exiftool "-filename<${CreateDate}+08:00_${FileName}" -d "%Y%m%d_%H%M%S" -overwrite_original
+```
+
+在`${CreateDate}+08:00`這部分，`+08:00`會將創建日期（CreateDate）加上8小時。確保你的檔案的EXIF資訊中有正確無誤的CreateDate欄位資料。
+
+如果要處理大量檔案，記得在指令最後面加上要處理的檔案或資料夾。例如：
+
+```bash
+exiftool "-filename<${CreateDate}+08:00_${FileName}" -d "%Y%m%d_%H%M%S" -overwrite_original /path/to/files/
+```
+
+取代 `/path/to/files/` 為你想要處理的檔案所在路徑。
+
+**注意**: 修改檔名或EXIF資訊都是有風險的操作。在執行之前請確保備份你的原始檔案。另外，在不同作業系統中或不同版本的 `exiftool` 中，語法可能會稍有不同。如果以上方法不適用於你當前使用的環境，請參考 `exiftool` 的官方文件或論壇以獲得更多幫助。
+--- end ---
+
+
+
