@@ -1,3 +1,37 @@
 ---1
 exiftool "-filename<${CreateDate}_${FileName}" -d "%Y%m%d_%H%M%S"  -overwrite_original
 透過這個方法可以將時間放入檔名中，但我的時區要+8，請問我該怎麼做
+
+
+
+---2
+`exiftool` 是一個功能強大的工具，用於讀取、寫入和編輯各種檔案的元數據。當你想要將文件的建立時間（CreateDate）添加到文件名中時，可以使用 `exiftool` 的日期時間格式化選項 `-d`。
+
+然而，根據你提供的命令，如果你需要根據特定時區（比如 UTC+8）來調整時間戳記，你可以在命令中添加 `-api QuickTimeUTC` 選項來確保 `CreateDate` 標籤以 UTC 時間表示，然後使用 `exiftool` 的日期時間移動功能來進行調整。
+
+以下是一個更新的命令範例，它會將建立日期時間調整為 UTC+8 時區並將其添加到文件名中：
+
+```sh
+exiftool "-filename<${CreateDate}+08:00_${FileName}" -d "%Y%m%d_%H%M%S" -api QuickTimeUTC -overwrite_original
+```
+
+在這個例子中：
+
+- `"${CreateDate}+08:00"` 表示對 `CreateDate` 標籤所代表的 UTC 時間加上 8 小時。注意：這假設您的 `CreateDate` 被記錄為 UTC。
+- `-d "%Y%m%d_%H%M%S"` 用於指定日期和時間的格式。
+- `-api QuickTimeUTC` 確保從具有 UTC 基準的標籤（例如 QuickTime 文件）讀取正確的時間戳。
+- `-overwrite_original` 會覆蓋原始文件而不留下副本。
+
+注意：在執行此操作之前，建議先測試幾個檔案以確保結果符合您的期望。此外，請確保備份原始文件以防止任何意外數據丟失。
+
+如果你發現 `CreateDate` 已經是本地時間而不是 UTC ，那麼你不需要使用 `-api QuickTimeUTC` 選項。直接使用原始命令就可以了：
+
+```sh
+exiftool "-filename<${CreateDate}_${FileName}" -d "%Y%m%d_%H%M%S" -overwrite_original
+```
+
+但如果 CreateDate 已經反映了錯誤的時區或沒有考慮時區差異，那麼可能需要手動調整相關數值。
+--- end ---
+
+
+
