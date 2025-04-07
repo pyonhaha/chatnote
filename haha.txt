@@ -33,5 +33,9 @@ exiftool "-filename<${CreateDate}_${FileName}" -d "%Y%m%d_%H%M%S" -overwrite_ori
 但如果 CreateDate 已經反映了錯誤的時區或沒有考慮時區差異，那麼可能需要手動調整相關數值。
 --- end ---
 
-
+---1
+Warning: [minor] The ExtractEmbedded option may find more tags in the media data - 20240705_160601_lp_image.MOV
+Warning: New file name not allowed in Windows (contains ':') - 20240705_160601_lp_image.MOV
+    0 image files updated
+    1 files weren't updated due to errors
 
