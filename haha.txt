@@ -59,3 +59,26 @@ attrib -A C:\example.txt
 ---1
 (Get-Item "C:\path\to\your\file.txt")如果要查看所有的屬性內容的值，請問要如何撰寫
 
+
+
+
+---2
+在 PowerShell 中，如果您想查看文件的所有属性和它们的值，您可以使用 `Get-ItemProperty` 命令。下面是一个示例，演示如何检索特定文件的所有属性：
+
+```powershell
+Get-ItemProperty -Path "C:\path\to\your\file.txt" | Format-List *
+```
+
+这条命令会列出路径 `"C:\path\to\your\file.txt"` 文件的所有属性及其相应的值，并使用 `Format-List`（简写为 `fl`）配合通配符 `*` 来格式化输出列表形式的全部属性。
+
+如果您只是想要获取文件本身而非它的属性，可以省略 `Property` 关键字，并直接使用 `Get-Item` 命令，如下所示：
+
+```powershell
+Get-Item -Path "C:\path\to\your\file.txt" | Format-List *
+```
+
+这也将显示文件的所有详细信息，包括名称、长度、创建时间等。请确保替换 `"C:\path\to\your\file.txt"` 为您要查看的实际文件路径。
+--- end ---
+
+
+
