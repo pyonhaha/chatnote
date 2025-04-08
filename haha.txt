@@ -3,3 +3,43 @@ exiftool "-filename<${FileModifyDate}_${FileName}" -d "%%Y%%m%%d_%%H%%M%%S"
 我透過這個方法將檔名命名成時間，但如果有重複的時間我該怎麼辦，我要如何讓命名遞增?
 
 
+
+
+
+---2
+如果您使用的是 `exiftool` 並希望在有重複時間的情況下對文件進行遞增命名，則可以在命令中加入一些額外的條件來檢查是否已存在相同名稱的文件，並相應地調整文件名。
+
+不幸的是，`exiftool` 本身並不直接支持在出現重複時自動進行遞增命名。但是，您可以撰寫一個外部腳本來處理這個問題。以下是一個簡單的 Bash 腳本示例，用於在 Unix-like 系統上實現這個功能：
+
+```bash
+#!/bin/bash
+
+for file in *; do
+    if [[ -f "$file" ]]; then # 確保它是一個文件
+        # 使用 exiftool 獲取修改日期和時間
+        datetime=$(exiftool -d "%Y%m%d_%H%M%S" -FileModifyDate "$file" | awk '{print $4}')
+        newname="${datetime}_${file}"
+        # 檢查是否已經存在此文件名
+        counter=1
+        while [[ -f "$newname" ]]; do
+            # 如果文件已存在，則添加一個遞增數字到新文件名後面
+            newname="${datetime}_$counter""_${file}"
+            ((counter++))
+        done
+        # 重新命名原始文件到新文件名
+        mv "$file" "$newname"
+    fi
+done
+
+exit 0
+```
+
+請注意，以上腳本需要在 Unix-like 系統（如 Linux 或 macOS）上執行。如果您使用的是 Windows，則需要使用 PowerShell 或其他批處理方法。
+
+在運行此腳本之前，確保對其進行必要的修改以符合您的具體要求和系統環境。同時請確保對要處理的目錄中所有文件都有足夠的權限。
+
+再次提醒，在執行任何批量重命名操作之前最好先備份所有文件以防萬一。
+--- end ---
+
+
+
