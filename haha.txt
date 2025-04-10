@@ -67,3 +67,32 @@ def default_iphone_headers() -> Dict[str, Any]:
             'x-whatsapp': '0'}
 
 請詳細說明這兩個function的內容
+
+
+
+---2
+這兩個函數都是Python函數，用於生成HTTP請求的頭部（headers）。每個函數返回一組特定的頭部信息，通常在發送HTTP請求時用來向服務器提供客戶端的環境資訊。
+
+1. `default_user_agent` 函數:
+這個函數不接受任何參數，並返回一個字符串，表示一個網頁瀏覽器的用戶代理（User-Agent）。用戶代理是一個標頭值，它告訴服務器發出請求的客戶端軟體是什麼。在這裡，返回的字符串模仿了Linux系統上運行的Google Chrome瀏覽器。這樣做可能是為了模擬桌面瀏覽器的行為或者避免被識別為爬蟲。
+
+2. `default_iphone_headers` 函數:
+這個函數也不接受任何參數，它返回一個字典，包含多個HTTP請求頭部。這些頭部信息模仿了從iPhone或iPad發出的Instagram應用程序的HTTP請求。下面是其中幾個關鍵頭部字段：
+
+   - `User-Agent`: 表示發送請求的客戶端身份，這裡指定了一款特定版本和設備型號的Instagram app。
+   - `x-ads-opt-out`: 通常用於表示使用者選擇退出廣告追蹤。
+   - `x-bloks-is-panorama-enabled`: 可能與Instagram界面有關。
+   - `x-bloks-version-id`: 代表特定版本ID。
+   - `x-fb-client-ip`: 表示是否傳送客戶端IP地址信息。
+   - `x-ig-app-id`: Instagram app 的唯一識別ID。
+   - 其他`x-ig-*` 頭部字段: 提供關於Instagram app連接質量、地區設置等信息。
+   - `x-pigeon-session-id`: 生成新的UUID作為會話ID以追蹤單次會話或請求。
+   - 日期和時間相關字段: 如`x-ig-timezone-offset`表示時區偏移量。
+
+使用隨機生成和當前時間相關資料填充某些欄位可以幫助使每次發送請求時都略有不同，從而讓自動化查詢更加類似真實使用者行為。
+
+在實際使用中，你可以將這些函數返回的值作為HTTP庫（如requests）所需提供給header參數以模仿真實客戶端行為。
+--- end ---
+
+
+
