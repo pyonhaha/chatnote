@@ -1,2 +1,57 @@
 ---1
 請問我要如何用instagrapi下載IG的貼文？
+
+
+
+---2
+`instagrapi` 是一個 Python 庫，它提供了一種非官方的方式來與 Instagram 的 API 進行互動。使用 `instagrapi`，你可以登入 Instagram 帳戶、獲取貼文、上傳圖片和影片等。以下是如何使用 `instagrapi` 下載 Instagram 貼文的步驟：
+
+1. **安裝 instagrapi**:
+   首先，確保你已經在你的系統上安裝了 Python。然後，在終端機或命令提示字元中運行以下命令來安裝 `instagrapi`：
+
+   ```bash
+   pip install instagrapi
+   ```
+
+2. **登入 Instagram**:
+   使用你的 Instagram 用戶名和密碼登入。為了安全起見，不要在公共代碼庫中硬編碼你的憑證。
+
+   ```python
+   from instagrapi import Client
+
+   cl = Client()
+   cl.login(USERNAME, PASSWORD)
+   ```
+
+3. **獲取貼文資訊**:
+   你可以通過貼文的 URL 或者 shortcode 獲取貼文的資訊。
+
+   ```python
+   media = cl.media_info_from_url('https://www.instagram.com/p/XXXXX/')
+   
+   # 或者如果你知道 shortcode
+   media = cl.media_info(shortcode)
+   
+4. **下載貼文**:
+    根據媒體類型（圖片或視頻），使用不同的方法來下載。
+
+    ```python
+    if media.media_type == 1:  # Photo
+        photo_url = media.thumbnail_url
+        photo_content = cl.photo_download_by_url(photo_url)
+        with open('photo.jpg', 'wb') as photo_file:
+            photo_file.write(photo_content)
+    elif media.media_type == 2:  # Video
+        video_url = media.video_url
+        video_content = cl.video_download_by_url(video_url)
+        with open('video.mp4', 'wb') as video_file:
+            video_file.write(video_content)
+    ```
+    
+以上只是基本用法示例。實際上，Instagram 的 API 可能會定期變化，且對於自動化有限制和條款。而且，使用第三方庫存取 Instagram API 可能會違反其服務條款，可能導致帳號被限制或封禁。
+
+在開始之前，建議閱讀 instagrapi 官方文件以及 Instagram 的使用政策，以確保合理且安全地使用該工具。
+--- end ---
+
+
+
