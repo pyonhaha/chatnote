@@ -32,6 +32,9 @@ ffmpeg -i input.mp4 -vcodec h264 -crf 24 -preset medium -acodec aac output.mp4
 
 最後記得將上述命令中的`input.mp4`替換成你自己需要轉換的檔案名稱，同時也將`output.mp4`替換成你希望生成的新檔案名稱。
 --- end ---
-
+---1
+preset關於這個參數
+如果我不進行任何壓縮，維持原樣，我要選擇哪一個？
+如果我要進行壓縮，但我在意能降低多少檔案大小，我要以影片撥放的品質優先，請問我要選擇哪一個？
 
 
