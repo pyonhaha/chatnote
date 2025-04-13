@@ -1,2 +1,37 @@
 ---1
 我有一個mp4 iphone無法撥放，我要如何用ffmepg將此影片轉換成最常見的mp4編碼
+
+
+
+---2
+如果你的iPhone無法播放一個MP4檔案，可能是因為該檔案使用了iPhone不支持的編碼格式。你可以使用FFmpeg這個強大的多媒體處理工具來將影片轉換成一個與iPhone相容的格式。
+
+以下是一個基本的FFmpeg命令範例，用於將影片轉換成一個常見的、與大多數iPhone設備相容的MP4格式（使用H.264視頻編碼和AAC音頻編碼）：
+
+```bash
+ffmpeg -i input.mp4 -vcodec h264 -acodec aac output.mp4
+```
+
+這裡是命令參數解釋：
+- `-i input.mp4`：指定輸入檔案名稱。
+- `-vcodec h264`：指定視頻編碼器為H.264。
+- `-acodec aac`：指定音頻編碼器為AAC。
+- `output.mp4`：指定輸出檔案名稱。
+
+如果你想要控制輸出影片的品質，可以透過下列參數進行調整：
+- `-crf`：後面接一個數字，用於控制視頻品質，範圍從0（最佳品質）到51（最差品質）。推薦值通常在18到28之間。
+- `-preset`：指定壓縮速度和品質之間的平衡。可選值包括 `ultrafast`, `superfast`, `veryfast`, `faster`, `fast`, `medium`（默認值）, `slow`, `slower`, 和 `veryslow`。越往後壓縮時間越長，但也可能會提高壓縮效率並降低檔案大小。
+
+例如：
+
+```bash
+ffmpeg -i input.mp4 -vcodec h264 -crf 24 -preset medium -acodec aac output.mp4
+```
+
+在執行上述命令前，請確保你已安裝了FFmpeg。如果你沒有安裝FFmpeg，可以訪問[FFmpeg官方網站](https://ffmpeg.org/download.html)下載適用於你作業系統的版本並安裝。
+
+最後記得將上述命令中的`input.mp4`替換成你自己需要轉換的檔案名稱，同時也將`output.mp4`替換成你希望生成的新檔案名稱。
+--- end ---
+
+
+
