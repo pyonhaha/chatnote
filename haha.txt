@@ -100,4 +100,5 @@ JSON Query to graphql/query: 401 Unauthorized - "fail" status, message "Please w
 --- end ---
 
 
-
+---1
+若不要頻繁的打API，我有什麼方式可以一次取得所有貼文的日期以及其他資訊？
