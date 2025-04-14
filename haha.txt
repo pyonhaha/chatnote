@@ -1,2 +1,81 @@
 ---1
 我要如何用PYTHON Scrapy抓取指定網頁的所有照片和herf?s
+
+
+
+---2
+在Python中使用Scrapy框架來抓取指定網頁的所有圖片和超連結（hrefs）可以按照以下步驟進行：
+
+1. 安裝Scrapy：
+如果你還沒有安裝Scrapy，可以通過pip命令安裝：
+```bash
+pip install scrapy
+```
+
+2. 建立一個新的Scrapy專案：
+在命令行中執行以下命令來創建一個新的Scrapy專案：
+```bash
+scrapy startproject myproject
+```
+這裡`myproject`是你的專案名稱，你可以換成任何你想要的名稱。
+
+3. 定義Item：
+在`myproject/myproject/items.py`檔案中定義你想要收集的數據結構。例如，我們可能想要存儲圖片URL和超連結URL。
+```python
+import scrapy
+
+class MyprojectItem(scrapy.Item):
+    image_urls = scrapy.Field()
+    hrefs = scrapy.Field()
+```
+
+4. 創建Spider：
+在`myproject/myproject/spiders/`目錄下創建一個新的spider文件，例如`myspider.py`。
+```python
+import scrapy
+from myproject.items import MyprojectItem
+
+class MySpider(scrapy.Spider):
+    name = 'myspider'
+    allowed_domains = ['example.com']  # 設定允許爬取的域名
+    start_urls = ['http://www.example.com/']  # 設定起始爬取網址
+
+    def parse(self, response):
+        item = MyprojectItem()
+
+        # 抓取所有圖片URLs
+        item['image_urls'] = response.css('img::attr(src)').getall()
+
+        # 抓取所有超連結URLs
+        item['hrefs'] = response.css('a::attr(href)').getall()
+
+        yield item
+
+        # 如果需要追蹤超連結到下一個頁面，可以使用以下代碼段落
+        for href in item['hrefs']:
+            yield response.follow(href, self.parse)
+```
+
+5. 設置Pipeline處理圖片下載：
+打開設置文件 `myproject/myproject/settings.py` 並啟用 `ImagesPipeline` 和 `FilesPipeline`（如果需要）。
+```python
+ITEM_PIPELINES = {
+    'scrapy.pipelines.images.ImagesPipeline': 1,
+}
+# 配置保存本地的地址（相對於專案路徑）
+IMAGES_STORE = 'path/to/your/images'
+```
+
+6. 執行Spider：
+回到命令行界面，在專案根目錄下運行以下命令來執行你的spider：
+```bash
+scrapy crawl myspider
+```
+
+上述步驟是基本流程。根據實際情況，可能需要進行額外配置和調整。例如，處理JavaScript生成內容、遞歸抓取多層頁面、設置用戶代理、處理cookies等。如果目標網站有防爬策略或使用了Ajax動態加載數據，則可能需要其他方法（如Selenium或Splash）來處理。
+
+記得遵守robots.txt協議和網站服務條款，在合法範圍內進行爬蟲操作。
+--- end ---
+
+
+
