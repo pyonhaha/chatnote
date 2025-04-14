@@ -57,5 +57,6 @@ gallery-dl https://www.instagram.com/username/
 请记住根据您所在地区法律以及服务条款遵循适当法规，在使用类似工具时始终尊重版权和个人隐私。
 --- end ---
 
-
+---1
+我要如何將gallery-dl https://www.instagram.com/username/加入原有的python code中？
 
