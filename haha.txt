@@ -60,3 +60,41 @@ gallery-dl https://www.instagram.com/username/
 ---1
 我要如何將gallery-dl https://www.instagram.com/username/加入原有的python code中？
 
+
+
+
+---2
+要将 `gallery-dl` 命令集成到现有的 Python 代码中，你可以使用 Python 的 `subprocess` 模块来调用命令行工具。以下是一个简单的例子说明如何做到这一点：
+
+```python
+import subprocess
+
+# 定义Instagram用户名
+username = 'username'
+
+# 构建gallery-dl命令
+command = f'gallery-dl https://www.instagram.com/{username}/'
+
+# 使用subprocess运行gallery-dl命令
+result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+# 检查命令是否成功执行
+if result.returncode == 0:
+    print('Download completed successfully.')
+else:
+    print('An error occurred:', result.stderr.decode())
+```
+
+在这个例子中，我们使用了 `subprocess.run()` 函数来执行外部的 `gallery-dl` 命令。我们设置 `shell=True` 参数以便在 shell 环境中运行该命令。这样可以解释和运行字符串形式的命令。
+
+`stdout=subprocess.PIPE` 和 `stderr=subprocess.PIPE` 参数会捕获命令的标准输出和标准错误输出，所以你可以在 Python 中访问这些输出。
+
+请注意，由于使用了 shell 来执行命令，所以可能会存在安全风险，特别是当你对输入没有完全控制时。务必确保任何传入的参数都是可信的，或者使用更安全的方式来避免潜在的代码注入攻击。
+
+此外，记得替换 `'username'` 为实际想要下载照片的 Instagram 用户名，并确保你已经正确配置了 gallery-dl（如之前提到的配置 Instagram 访问）。
+
+在实际应用场景中，根据具体需求和上下文环境可能需要进一步调整和处理异常情况。
+--- end ---
+
+
+
