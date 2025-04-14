@@ -1,2 +1,62 @@
 ---1
 如果我有一個網址，他是一張圖片，我要如何用python下載？
+
+
+
+---2
+要使用Python下載網路上的圖片，你可以使用`requests`庫來發送HTTP請求，然後將回應內容寫入檔案。以下是一個基本的例子說明如何完成這個任務：
+
+首先，你需要安裝`requests`庫（如果你還沒有安裝的話）：
+
+```sh
+pip install requests
+```
+
+然後，你可以使用以下的Python代碼來下載圖片：
+
+```python
+import requests
+
+# 圖片網址
+image_url = "http://example.com/image.jpg"
+
+# 發送GET請求
+response = requests.get(image_url)
+
+# 檢查請求是否成功
+if response.status_code == 200:
+    # 開啟一個檔案以寫入二進位資料模式
+    with open("image.jpg", "wb") as file:
+        # 寫入回應內容（圖片數據）
+        file.write(response.content)
+```
+
+將上述代碼中的`image_url`變量值替換成你想要下載的圖片地址。這段代碼會將圖片保存到當前工作目錄中，檔名為"image.jpg"。
+
+記得處理可能出現的例外情況，例如網絡問題或文件寫入錯誤等。以下是添加了基本例外處理功能的版本：
+
+```python
+import requests
+
+def download_image(image_url, filename):
+    try:
+        response = requests.get(image_url)
+        response.raise_for_status()  # 如果回應狀態碼不是200，將引發HTTPError例外
+
+        with open(filename, "wb") as file:
+            file.write(response.content)
+        print(f"{filename} has been downloaded!")
+    except requests.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
+    except Exception as err:
+        print(f"An error occurred: {err}")
+
+# 使用函數下載圖片
+download_image("http://example.com/image.jpg", "downloaded_image.jpg")
+```
+
+在這個版本中，我們定義了一個函數`download_image`來處理下載過程並提供基本錯誤處理。這可以幫助你更好地管理錯誤和異常情況。
+--- end ---
+
+
+
