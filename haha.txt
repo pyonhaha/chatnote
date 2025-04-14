@@ -72,3 +72,32 @@ for post in posts:
 我已經取得了posts為什麼還會須有401的問題?
 JSON Query to graphql/query: 401 Unauthorized - "fail" status, message "Please wait a few minutes before you try again." when accessing https://www.instagram.com/graphql/query [retrying; skip with ^C]
 
+
+
+
+---2
+出现 `401 Unauthorized` 错误通常意味着你的请求未被授权。在使用 Instaloader 或任何与 Instagram API 交互的工具时，可能会因为以下原因遇到此类错误：
+
+1. **登录凭据无效或过期**：如果你使用了登录功能，确保你的 Instagram 凭据是正确的，并且没有因为某些原因（如密码更改）而失效。
+
+2. **过度请求**：Instagram 对其 API 请求有频率限制。如果你在短时间内发送了太多请求，可能会被暂时锁定。这种情况下，错误消息建议“请等几分钟再试”。
+
+3. **需要验证**：有时候，当检测到异常行为（比如从不同的 IP 地址登录）时，Instagram 可能需要额外的验证步骤。
+
+4. **API 更改或限制**：Instagram 不定期地更改其私有 API，并可能对某些类型的访问施加限制。Instaloader 等工具依赖于这些私有 API 的稳定性，任何更改都可能影响工具的功能。
+
+5. **封禁或 Shadowban**：在极端情况下，如果 Instagram 认为你的行为违反了它们的条款和条件，它们可能会暂时封禁你的账户。
+
+要解决这个问题，请尝试以下步骤：
+
+- 确认你是否可以通过网页或移动应用程序正常访问 Instagram。
+- 如果使用了登录，请确保提供了正确的用户名和密码。
+- 暂停脚本一段时间后再试，以免触发频率限制。
+- 检查是否有来自 Instagram 的安全提示或验证请求。
+- 如果问题持续存在，请考虑检查 Instaloader 的 GitHub 仓库以获取任何相关问题或更新。
+  
+请记住，在爬取数据时要遵守相应平台的条款服务，并确保您对数据的使用是合法和道德的。
+--- end ---
+
+
+
