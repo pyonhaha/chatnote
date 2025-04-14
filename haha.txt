@@ -65,5 +65,10 @@ df.to_csv('posts.csv', index=False)
 以上代码假设你已经安装了 `instaloader` 和 `pandas` 库，并且已经知道如何处理 Instagram 的登录和会话管理。注意，要获取 Instagram 数据，通常需要有效地登录到 Instagram 账户。另外，请确保遵守 Instagram 的使用条款，并尊重用户隐私和版权。
 --- end ---
 
-
+---1
+for post in posts:
+    print(post.date)
+根據你的說法，我執行了上述代碼，我已經取得了posts，為什麼還是回得到下列錯誤？
+我已經取得了posts為什麼還會須有401的問題?
+JSON Query to graphql/query: 401 Unauthorized - "fail" status, message "Please wait a few minutes before you try again." when accessing https://www.instagram.com/graphql/query [retrying; skip with ^C]
 
