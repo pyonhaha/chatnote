@@ -17,3 +17,46 @@ a.html.html
 
 
 
+
+
+
+---2
+要獲取滾動後才加載的資料，你需要模擬瀏覽器的滾動行為。在`AsyncHTMLSession`使用的庫`requests-html`中，可以通過執行JavaScript代碼來模擬滾動。你可以使用`response.html.arender(script='window.scrollTo(0, document.body.scrollHeight)')`這樣的代碼來實現滾動頁面到底部。
+
+以下是一個改進版的函數，它會嘗試向下滾動頁面並等待新內容加載：
+
+```python
+from requests_html import AsyncHTMLSession
+
+async def fetch_data(scroll_times=3, wait_time=3):
+    session = AsyncHTMLSession()
+    url = "https://www.instagram.com/sakura.gun"
+    
+    response = await session.get(url)
+    await response.html.arender()  # 首次渲染
+    
+    for _ in range(scroll_times):
+        # 模擬向下滚动
+        await response.html.arender(script="window.scrollTo(0, document.body.scrollHeight)", sleep=wait_time)
+    
+    print(response.html.html)  # 打印当前页面内容
+    return response
+
+# 使用异步环境来执行fetch_data函数
+import asyncio
+
+async def main():
+    a = await fetch_data()
+    print(a.html.html)  # 获取并打印最终加载的页面HTML代码
+
+# 在Python异步环境中运行main函数
+await main()
+```
+
+在這個例子中，我們添加了兩個參數：`scroll_times`和`wait_time`。前者控制著我們希望執行多少次向下滾動；後者控制在執行下一次JavaScript之前等待新內容加載的時間（以秒為單位）。
+
+注意：由於Instagram可能會對爬虫有限制或需要處理登入認證，此代碼可能無法直接工作或需額外處理。而且隨著Instagram前端代碼的變化，這種方法也可能失效。此外，在使用自動化工具爬取網站時，要遵循該網站的服務條款以及相關法律法規。
+--- end ---
+
+
+
