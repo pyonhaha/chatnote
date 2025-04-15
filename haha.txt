@@ -1,57 +1,19 @@
 ---1
-如果我有一個網址https://www.instagram.com/sakura.gun/p/BdH7ekZjmm4/
-我要如何用scrapy爬蟲抓取全部的HTML資訊？
+async def fetch_data():
+    session = AsyncHTMLSession()
+    url = "https://www.instagram.com/sakura.gun"
+    response = await session.get(url)
+    await response.html.arender()
+    print(response.html.html)
+    return response
+#%%
+a = await fetch_data()
+# %%
+a.html.html
 
-
-
----2
-要使用Scrapy來爬取Instagram上的資料，您需要建立一個Scrapy專案並撰寫一個Spider來抓取HTML。不過，由於Instagram對於其網站資料的存取有所限制，並且使用JavaScript動態加載內容，直接爬取HTML可能無法獲得您想要的所有資訊。此外，Instagram API是另一種更官方和穩定的獲取資料方式，但它需要註冊應用程序並遵循特定的使用規則。
-
-以下是如何使用Scrapy來嘗試抓取該頁面HTML的基本步驟：
-
-1. 安裝Scrapy：
-如果您尚未安裝Scrapy，可以通過Python的包管理工具pip安裝：
-
-```bash
-pip install scrapy
-```
-
-2. 建立Scrapy專案：
-在命令行中輸入以下命令來建立一個新的Scrapy專案：
-
-```bash
-scrapy startproject instagram_scraper
-```
-
-3. 定義Spider：
-在剛建立的 `instagram_scraper` 專案目錄中創建一個名為 `spiders` 的子目錄（如果不存在），然後在該目錄下創建一個新的Python文件（例如 `instagram_spider.py`），並定義您的Spider。
-
-```python
-import scrapy
-
-class InstagramSpider(scrapy.Spider):
-    name = 'instagram'
-    allowed_domains = ['www.instagram.com']
-    start_urls = ['https://www.instagram.com/sakura.gun/p/BdH7ekZjmm4/']
-
-    def parse(self, response):
-        with open('page.html', 'wb') as f:
-            f.write(response.body)
-```
-
-4. 運行Spider：
-返回命令行，確保您位於Scrapy專案目錄中（即含有 `scrapy.cfg` 的目錄），然後運行以下命令以啟動Spider：
-
-```bash
-scrapy crawl instagram
-```
-
-這會使得爬蟲開始工作，並嘗試抓取指定URL頁面上的所有HTML資訊。
-
-注意：由於Instagram可能會檢查用戶代理 (User-Agent) 以及其他反爬虫措施，上述方法可能無法成功抓取到頁面。此外，在不久前Instagram加強了其反爬蟲策略，因此僅靠基本的HTTP請求可能無法獲得所需數據。若真正需要大量數據或者特定數據集合時應考慮使用官方API或者其他合法途徑。
-
-最後提醒您，在使用爬虫時必須遵守相關網站政策和服務條款，否則可能會觸法或被禁止服務。
---- end ---
+我透過這個方法，可以獲得html渲染後的網頁原始碼
+但當我實際上查看網頁的時候，將滑鼠滾輪往下滾，網頁將會持續載入新的資料
+我要如何下滑才會顯示的資料的原始碼也讀取近來？
 
 
 
