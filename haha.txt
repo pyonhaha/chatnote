@@ -62,3 +62,20 @@ await main()
 RuntimeError: Cannot use HTMLSession within an existing event loop. Use AsyncHTMLSession instead.
 我得到了這個錯誤，為什麼?
 
+
+
+
+---2
+这个错误发生是因为你在一个已经运行的异步事件循环中尝试使用`HTMLSession`，而它不是异步兼容的。在Python中，如果你正在使用异步（async/await）功能，你需要确保所有的操作都是异步兼容的。
+
+`HTMLSession` 是 `requests-html` 库中用于同步操作的会话类。当你处于一个异步环境时（例如，在使用 `async def` 定义的函数内部），你应该使用 `AsyncHTMLSession` 类来进行异步HTTP请求。
+
+如果你看到这个错误信息，它意味着某处代码错误地使用了 `HTMLSession` 而不是 `AsyncHTMLSession`。请检查你的代码并确保在任何需要进行HTTP请求的地方都使用了正确的会话类型。
+
+假设你已经正确使用了 `AsyncHTMLSession` 但仍然遇到这个问题，可能是因为某些库或框架（如Flask、Django、Jupyter Notebook等）已经启动了一个事件循环。在这种情况下，确保你的异步代码与这些环境兼容，并且没有试图创建多余的事件循环。
+
+如果问题仍然存在，请提供更多上下文和代码细节，以便我可以进一步帮助解决问题。
+--- end ---
+
+
+
