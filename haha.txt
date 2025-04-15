@@ -58,5 +58,7 @@ await main()
 注意：由於Instagram可能會對爬虫有限制或需要處理登入認證，此代碼可能無法直接工作或需額外處理。而且隨著Instagram前端代碼的變化，這種方法也可能失效。此外，在使用自動化工具爬取網站時，要遵循該網站的服務條款以及相關法律法規。
 --- end ---
 
-
+---1
+RuntimeError: Cannot use HTMLSession within an existing event loop. Use AsyncHTMLSession instead.
+我得到了這個錯誤，為什麼?
 
