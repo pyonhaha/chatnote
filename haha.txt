@@ -1,2 +1,43 @@
 ---1
 我要如何透過yt-dlp.exe取得一個youtube頻道的所有影片列表？
+
+
+
+---2
+要使用`yt-dlp.exe`取得一個YouTube頻道的所有影片列表，你可以透過命令提示字元（CMD）或終端機（Terminal）來執行相關指令。以下是一個基本的步驟來獲取YouTube頻道的影片列表：
+
+1. **下載yt-dlp**：首先，你需要從yt-dlp的官方GitHub頁面或其他可靠來源下載`yt-dlp.exe`檔案。
+
+2. **開啟命令提示字元**：在Windows上，你可以按下`Win + R`鍵，然後輸入`cmd`並按下Enter鍵來開啟命令提示字元。
+
+3. **導航至yt-dlp.exe所在目錄**：使用cd命令（Change Directory）來切換到包含`yt-dlp.exe`的文件夾。例如：
+   ```
+   cd C:\path\to\your\yt-dlp
+   ```
+
+4. **執行指令獲取影片列表**：使用以下格式的指令來獲取YouTube頻道的影片列表：
+   ```
+   yt-dlp.exe -s --get-id https://www.youtube.com/channel/CHANNEL_ID
+   ```
+   將`CHANNEL_ID`替換成想要獲取影片列表的YouTube頻道ID。
+
+這裡有一些常用選項解釋：
+
+- `-s, --simulate`: 模擬下載過程，不實際下載視頻文件。
+- `--get-id`: 僅打印每個視頻的ID而不進行其他操作。
+- `--get-title`: 僅打印每個視頻的標題而不進行其他操作。
+- `--write-info-json`: 為每個視頻保存一個包含影片信息的JSON文件。
+- `--flat-playlist`: 不要提取播放清單中視頻詳細信息，只顯示ID等基本信息。
+
+如果想要獲得更多資訊（例如標題、長度等），你可以添加或者修改參數。例如：
+```
+yt-dlp.exe -s --get-title --get-duration https://www.youtube.com/channel/CHANNEL_ID
+```
+
+記住將上述指令中的URL替換成目標YouTube頻道或播放清單的實際URL。如果你只知道頻道名稱而不是URL或ID，那麼需要先去YouTube上找到該頻道並復制其URL。
+
+在運行以上任何命令之前，確保Internet連接正常且沒有被限制訪問YouTube。
+--- end ---
+
+
+
