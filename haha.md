@@ -117,3 +117,118 @@ print("Back to normal.")
 除了標準輸出和標準錯誤  stdout和stderr
 還有什麼其他的輸出方式的標準
 
+
+
+
+---2
+<br>在計算機和程式開發中，除了標準輸出（`stdout`）和標準錯誤（`stderr`），還有其他的標準輸入/輸出的概念。以下是常見的 I/O 標準：
+
+---
+
+### 1. **標準輸入 (`stdin`)**
+   - **用途**: 標準輸入是用來接收外部資料到程式內部的介面。例如，從鍵盤讀取使用者輸入，或者通過管道從另一個程式傳遞資料。
+   - **典型操作**:
+     在 Python 中可以透過 `sys.stdin` 或 `input()` 來讀取資料。
+     ```python
+     import sys
+     user_input = input("Enter something: ")  # 從鍵盤讀取
+     print(f"You entered: {user_input}")
+     ```
+   - **管道範例**:
+     ```bash
+     echo "Hello, World!" | python your_script.py
+     ```
+     在這個例子中，`echo` 的輸出通過管道進入 Python 程式的 `stdin`。
+
+---
+
+### 2. **檔案 I/O**
+   - 與標準 I/O 不同，檔案 I/O 是直接與檔案系統進行交互。你可以開啟、讀取、寫入或關閉檔案。
+   - **Python 範例**:
+     ```python
+     with open("example.txt", "w") as file:
+         file.write("This is written to a file.")
+     
+     with open("example.txt", "r") as file:
+         content = file.read()
+         print(content)
+     ```
+
+---
+
+### 3. **網路 I/O**
+   - 程式可以透過網路進行資料的發送和接收，例如 HTTP 請求或 TCP/UDP 通訊。
+   - **Python 範例（使用 `socket` 模組）**:
+     ```python
+     import socket
+
+     # 建立一個 TCP socket 並連接到伺服器
+     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+         s.connect(("example.com", 80))
+         s.sendall(b"GET / HTTP/1.1\r\nHost: example.com\r\n\r\n")
+         response = s.recv(1024)
+         print(response.decode())
+     ```
+
+---
+
+### 4. **記憶體 I/O (StringIO / BytesIO)**
+   - 有時候需要在記憶體中模擬檔案操作，可以使用 `io.StringIO` 或 `io.BytesIO`。
+   - **Python 範例**:
+     ```python
+     from io import StringIO
+
+     # 使用 StringIO 模擬一個文字檔案
+     memory_file = StringIO()
+     
+     memory_file.write("This is stored in memory.")
+     
+     # 移動指針到開頭並讀取內容
+     memory_file.seek(0)
+     
+     print(memory_file.read())
+     
+     memory_file.close()
+    ```
+
+---
+
+### 5. **日誌文件 (`logging`)**
+   - 日誌是一種常用的輸出方式，用於記錄程式執行狀態、錯誤或調試資訊。
+   - Python 的 `logging` 模組支援多種目的地，包括文件、終端、甚至遠端伺服器。
+   - **範例**：
+      ```python
+      import logging
+
+      logging.basicConfig(filename="app.log", level=logging.INFO)
+      logging.info("This message will be written to app.log")
+      ```
+
+---
+
+### 6. **圖形化界面 (GUI Output)**
+   - 如果你的應用程式有圖形化介面，那麼輸出可能是更新視窗中的文字、顯示圖片或繪製圖表，而不是透過終端機或文件。
+   - 常見 GUI 工具包括 Tkinter、PyQt 或 Kivy 等。
+   - **Tkinter 範例**：
+      ```python
+      import tkinter as tk
+
+      root = tk.Tk()
+      label = tk.Label(root, text="Hello, GUI!")
+      label.pack()
+      root.mainloop()
+      ```
+
+---
+
+### 7. **串列埠 (Serial Port I/O)**
+   - 串列埠（Serial Port）通常用於嵌入式系統與硬體設備之間的通信，例如 Arduino 或 Raspberry Pi 的資料交換。
+   - 使用 Python 的 `pyserial` 模組進行串列通信：
+      ```python
+      import serial
+
+      ser = serial.Serial('/dev/ttyUSB0', baudrate=9600, timeout
+<br>--- end ---
+
+
+
