@@ -113,5 +113,7 @@ print("Back to normal.")
 - 如果只是臨時性需求，使用上下文管理器（如 `redirect_stderr`) 是更安全且推薦的方法。
 <br>--- end ---
 
-
+---1
+除了標準輸出和標準錯誤  stdout和stderr
+還有什麼其他的輸出方式的標準
 
