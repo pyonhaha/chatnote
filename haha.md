@@ -47,5 +47,7 @@ logger.info("This will be printed to standard output (stdout).")
 Python 的 `logging` 預設使用 `stderr` 是一種良好的實踐，但根據你的需求，你完全可以自訂它的行為。
 <br>--- end ---
 
-
+---1
+在logging以外的地方
+我要如何將stderr全部導向stdout
 
