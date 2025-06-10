@@ -33,3 +33,31 @@ Ainsworth, M. D., & Wittig, B. A. (1969). Attachment and exploratory behavior of
 我認為是第三點有錯誤
 請幫我修改
 
+
+
+
+---2
+<br>感謝你的指正！在APA第七版中，對於書籍章節的引用格式確實有一些微妙的變化。以下是更準確的呈現方式，特別針對頁碼部分：
+
+---
+
+**Ainsworth, M. D., & Wittig, B. A. (1969).** Attachment and exploratory behavior of one-year-olds in a strange situation. In B. M. Foss (Ed.), *Determinants of infant behavior* (Vol. 4, Chapter X, pp. 113–136). Methuen.
+
+---
+
+### 關於頁碼問題：
+在APA第七版中，頁碼應該是簡單地列出範圍（例如：pp. 113–136），不需要像「Chapter X」或其他多餘資訊。如果章節標題未明確列出，可直接忽略。
+
+因此，最終正確格式應為：
+
+---
+
+**Ainsworth, M. D., & Wittig, B. A. (1969).** Attachment and exploratory behavior of one-year-olds in a strange situation. In B. M. Foss (Ed.), *Determinants of infant behavior* (Vol. 4, pp. 113–136). Methuen.
+
+---
+
+這樣才完全符合APA第七版規範！感謝提醒，希望這次能解答你的問題。
+<br>--- end ---
+
+
+
