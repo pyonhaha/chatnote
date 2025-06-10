@@ -29,5 +29,7 @@ Ainsworth, M. D., & Wittig, B. A. (1969). Attachment and exploratory behavior of
 如果還有其他細節或問題，歡迎繼續討論！
 <br>--- end ---
 
-
+---1
+我認為是第三點有錯誤
+請幫我修改
 
