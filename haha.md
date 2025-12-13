@@ -105,4 +105,8 @@ t_i \times y \times 倍數 & (\text{間接人工}) \\
 <br>--- end ---
 
 
+---1
+我是用python寫的
+請給我puthon code
+
 
