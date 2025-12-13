@@ -145,3 +145,29 @@ employees = [
 請忽略前面的prompt
 給我盡可能完整的python code
 
+
+
+
+---2
+<br>好的！以下是一个完整的 Python 代码，用于根据规则计算每位员工的加班费，并汇总部门和公司总支出。代码包括输入数据、加班费计算逻辑、以及最终输出结果。
+
+---
+
+### **完整 Python Code**
+```python
+# 导入必要库
+import pandas as pd
+
+# 定义员工数据（可以替换为实际数据）
+employees = [
+    {"name": "Alice", "department": "A", "type": "direct", "base_rate": 50, 
+     "hours_worked": 5, "day_type": "holiday", "years": 3},
+    {"name": "Bob", "department": "A", "type": "indirect", "base_rate": 70, 
+     "hours_worked": 3, "day_type": "festival", "years": 5},
+    {"name": "Charlie", "department": "B", 
+```
+
+<br>--- end ---
+
+
+
