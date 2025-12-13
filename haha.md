@@ -110,3 +110,36 @@ t_i \times y \times 倍數 & (\text{間接人工}) \\
 請給我puthon code
 
 
+
+
+
+---2
+<br>好的！以下是一个使用Python编写的代码示例，用于根据你的规则计算加班费。代码将包含以下几个部分：
+
+1. 输入数据（员工信息、加班时间等）。
+2. 定义加班费计算函数。
+3. 根据总支出分配加班费。
+4. 输出结果。
+
+---
+
+### **Python Code**
+
+```python
+# 导入必要库
+import pandas as pd
+
+# 假设的员工数据（可以替换为实际数据）
+employees = [
+    {"name": "Alice", "department": "A", "type": "direct", "base_rate": 50, 
+     "hours_worked": 5, "day_type": "holiday", "years": 3},
+    {"name": "Bob", "department": "A", "type": "indirect", "base_rate": 70, 
+     "hours_worked": 3, "day_type": "festival", "years": 5},
+    {"name": "Charlie", "department": "B", "type": "direct", 
+     "base_rate": 50, 
+     # 加班时间
+     # 节假日分类
+<br>--- end ---
+
+
+
